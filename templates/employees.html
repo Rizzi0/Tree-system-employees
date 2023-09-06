@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Список сотрудников</h1>
+    
+    <!-- Форма для выбора параметров сортировки -->
+    <form method="get" action="/employees">
+        <label for="sort_field">Сортировать по полю:</label>
+        <select name="sort_field" id="sort_field">
+            <option value="id">ID</option>
+            <option value="name">Имя</option>
+            <option value="position">Должность</option>
+            <option value="hire_date">Дата найма</option>
+            <option value="salary">Зарплата</option>
+        </select>
+        <label for="sort_order">Порядок сортировки:</label>
+        <select name="sort_order" id="sort_order">
+            <option value="asc">По возрастанию</option>
+            <option value="desc">По убыванию</option>
+        </select>
+        <button type="submit">Сортировать</button>
+    </form>
+    
+    <!-- Таблица с данными о сотрудниках -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Должность</th>
+                <th>Дата найма</th>
+                <th>Зарплата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+            <tr>
+                <td>{{ employee.id }}</td>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.position }}</td>
+                <td>{{ employee.hire_date }}</td>
+                <td>{{ employee.salary }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

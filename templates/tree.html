@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+    <ul>
+        <!-- Определение функции для рекурсивного отображения сотрудников -->
+        {% macro display_employee(employee) %}
+            <li>
+                {{ employee.name }} ({{ employee.position }})
+                {% if employee.subordinates %}
+                    <ul>
+                        {% for subordinate in employee.subordinates %}
+                            {{ display_employee(subordinate) }}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endmacro %}
+        
+        <!-- Вызов функции для корневого сотрудника (например, CEO) -->
+        {{ display_employee(root_employee) }}
+    </ul>
+{% endblock %}
