@@ -24,7 +24,6 @@ class Employee(db.Model):
 
 
 
-
 # Создание фейковых данных для БД. 
 def create_employee(name, position, hire_date, salary, manager=None):
     employee = Employee(name=name, position=position, hire_date=hire_date, salary=salary, manager=manager)
@@ -33,21 +32,18 @@ def create_employee(name, position, hire_date, salary, manager=None):
 
 
 
+
 # Страница создания фейковых данных бля БД
 @app.route("/", methods=["GET", "POST"])
 def display_tree():
     if request.method == "POST":
+        if Employee.query.filter_by(id=1).first() is None:
+            employee = Employee(name='Mars Mars', position='Seo', hire_date='2001-01-01', salary=30000, manager=None)
+            db.session.add(employee)
+            
         num = int(request.form.get("data"))
-        for _ in range(num):
-            if Employee.query.filter_by(id=1).first() is None:
-                create_employee('Mars Mars', 'Seo', '2001-01-01', 30000)
+        create_employee(num)
 
-            name = fake.name()
-            position = fake.job()
-            hire_date = (datetime.now() - timedelta(days=randint(1, 3650))).strftime('%Y-%m-%d')
-            salary = round(randint(30000, 150000), 2)
-            manager = choice(Employee.query.all())
-            create_employee(name, position, hire_date, salary, manager=manager)
 
 
         db.session.commit()
